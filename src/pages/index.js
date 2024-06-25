@@ -32,7 +32,15 @@ export default function Game() {
 
     const handleInputChange = (e) => {
         setInputText(e.target.value);
+        if (inputText.length >= text.length) {
+            newGame();
+        }
     };
+
+    function newGame(){
+        setText(getText());
+        setInputText("");
+    }
 
     return (
         <div>
@@ -81,7 +89,6 @@ export default function Game() {
                             e.preventDefault();
                         }
                     }}
-                    placeholder="Start typing..."
                     style={{ opacity: 0 }}
                     autoFocus={false}
                 />
