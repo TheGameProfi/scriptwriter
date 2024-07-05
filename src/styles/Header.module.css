@@ -1,0 +1,33 @@
+.head {
+    display: flex;
+    justify-content: space-between; /* Ensure items are spread across the header */
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: white;
+    min-width: 600px;
+}
+
+.branding {
+    display: flex;
+    align-items: center; /* Ensure items inside title div are aligned center */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.branding h1 {
+    margin-left: 10px;
+}
+
+.nav a {
+    margin-left: 15px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
