@@ -2,9 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import Header from "@/components/Header";
 import getText from "@/data/sentences";
 import styles from "@/styles/gamefield.module.css";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, TextField, InputAdornment } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { AccountCircle } from "@mui/icons-material";
 
 
 export default function Game() {
@@ -23,6 +24,8 @@ export default function Game() {
     const [prevCountdown, setPrevCountdown] = useState(countdown);
     const [correctLetters, setCorrectLetters] = useState(0);
     const [correctWords, setCorrectWords] = useState(0);
+    const [score, setScore] = useState(0);
+    const [username, setUsername] = useState("Guest");
     var counter = null;
 
     useEffect(() => {
@@ -95,13 +98,36 @@ export default function Game() {
         }
     }, [countdown]);
 
-    function finishGame() {
+    async function finishGame() {
         setIsFocused(false);
         document.querySelector('input').blur();
         countWords();
-        countLetters();
+        const correctLetters = countLetters();
+        logScore(correctLetters)
         setIsFinished(true);
         alert("Time's up!");
+    }
+
+    function logScore(rightLetters) {
+        const scores = (rightLetters * 0.34).toFixed(2);
+        const accuracy = Math.floor((inputText.length / text.length) * 100)
+        const speed = Math.floor((inputText.split(" ").length / prevCountdown) * 60);
+        setScore(scores);
+        // set score to database
+        fetch('/api/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, score: scores, accuracy: accuracy, speed: speed}),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     function countWords() {
@@ -115,7 +141,7 @@ export default function Game() {
         }
         setCorrectWords(tmpWords);
     }
-    function countLetters(){
+    function countLetters() {
         var tmpLetters = 0
         for (var i = 0; i < text.length && i < inputText.length; i++) {
             if (text[i] == inputText[i]) {
@@ -123,18 +149,16 @@ export default function Game() {
             }
         }
         setCorrectLetters(tmpLetters);
+        return tmpLetters;
     }
 
     return (
         <div>
             <Header />
             <div className={styles.typeField}>
-                <h1>Game</h1>
-                <br />
-
                 <div
                     className={`${!isFocused ? styles.blur : ''} ${styles.typeBox}`}
-                    style={{ color: 'grey', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}
+                    style={{ color: 'grey', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
                     onClick={() => document.querySelector('input').focus()}
                     onDragStart={(e) => e.preventDefault()}
                     onContextMenu={(e) => e.preventDefault()}
@@ -179,12 +203,28 @@ export default function Game() {
                     style={{ opacity: 0 }}
                     autoFocus={false}
                 />
-                {!isFocused && <div className={styles.unactive} onClick={() => document.querySelector('input').focus()}>
-                    <p>Press Enter or Click the box to start typing...</p>
+                {!isFocused && <div className={styles.unactive}>
+                    <TextField
+                        label="Username"
+                        variant="filled"
+                        value={username}
+                        focused
+                        onChange={(e) => setUsername(e.target.value)}
+                        sx={{ input: { color: 'white' } }}
+                        style={{ margin: '10px' }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment sx={{color: 'white'}} position="start">
+                                    <AccountCircle/>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <p onClick={() => document.querySelector('input').focus()}>Press Enter or Click this text to start typing...</p>
                     <br />
                     <ButtonGroup variant='contained' aria-label="Basic button group">
-                    <Button onClick={() => restartGame()} color='warning' startIcon={<RestartAltIcon />}>Restart</Button>
-                    <Button onClick={() => newGame()} color='error' endIcon={<PlayArrowIcon />}>New Game</Button>
+                        <Button onClick={() => restartGame()} color='warning' startIcon={<RestartAltIcon />}>Restart</Button>
+                        <Button onClick={() => newGame()} color='error' endIcon={<PlayArrowIcon />}>New Game</Button>
                     </ButtonGroup>
                 </div>}
                 {isFinished &&
@@ -193,7 +233,7 @@ export default function Game() {
                         <div className={styles.statTable}>
                             <div>
                                 <p>Your score:</p>
-                                <p>{correctLetters}</p>
+                                <p>{score}</p>
                             </div>
                             <div>
                                 <p>Your accuracy:</p>
@@ -201,12 +241,12 @@ export default function Game() {
                             </div>
                             <div>
                                 <p>Your speed:</p>
-                                <p>{inputText.length == 0 ? 0 : Math.floor((inputText.split(" ").length/ prevCountdown) * 60)} WPM</p>
+                                <p>{inputText.length == 0 ? 0 : Math.floor((inputText.split(" ").length / prevCountdown) * 60)} WPM</p>
                             </div>
                         </div>
                         <br />
                         <Button onClick={() => restartGame()} color='warning' variant='contained' startIcon={<RestartAltIcon />}>Restart</Button>
-                        <Button onClick={() => newGame()} variant='contained' color='success' endIcon={<PlayArrowIcon />} style={{margin: '10px'}}>Next</Button>
+                        <Button onClick={() => newGame()} variant='contained' color='success' endIcon={<PlayArrowIcon />} style={{ margin: '10px' }}>Next</Button>
                     </div>
                 }
             </div>
