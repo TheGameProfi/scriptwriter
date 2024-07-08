@@ -28,7 +28,7 @@ const Header = ({ toggleFunc, darkMode }) => {
                         height={30}
                         className={styles.logo}
                     />
-                    <h1>VirtualMinds</h1>
+                    <h1>DummyCompany</h1>
                 </div>
                 <div className={styles.title}>
                     <h1>MonkeyScript</h1>
