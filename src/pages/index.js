@@ -119,7 +119,7 @@ export default function Game() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username: username, score: scores, accuracy: accuracy, speed: speed}),
+            body: JSON.stringify({ username: username, score: scores, accuracy: accuracy, speed: speed }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -154,103 +154,110 @@ export default function Game() {
 
     return (
         <div>
-            <Header />
-            <div className={styles.typeField}>
-                <div
-                    className={`${!isFocused ? styles.blur : ''} ${styles.typeBox}`}
-                    style={{ color: 'grey', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-                    onClick={() => document.querySelector('input').focus()}
-                    onDragStart={(e) => e.preventDefault()}
-                    onContextMenu={(e) => e.preventDefault()}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onMouseUp={(e) => e.preventDefault()}
-                    onMouseMove={(e) => e.preventDefault()}
-                    onMouseEnter={(e) => e.preventDefault()}
-                    onMouseLeave={(e) => e.preventDefault()}
-                    onMouseOver={(e) => e.preventDefault()}
-                    onMouseOut={(e) => e.preventDefault()}
-                    onTouchStart={(e) => e.preventDefault()}
-                    onTouchMove={(e) => e.preventDefault()}
-                    onTouchEnd={(e) => e.preventDefault()}
-                    onTouchCancel={(e) => e.preventDefault()}
-                >
-                    <div className={styles.timer}>
-                        <h2>{countdown}</h2>
-                    </div>
-                    {text.split("").map((letter, index) => (
-                        <span
-                            key={index}
-                            style={{ color: inputText[index] ? letter === inputText[index] ? "white" : "red" : "grey" }}
-                        >
-                            {isFocused && index === inputText.length && <span className={styles.cursor}>.</span>}
-                            <span style={{ position: 'relative' }}>
-                                {index < inputText.length && inputText[index] != letter && letter == ' ' ? '_' : letter}
-                            </span>
-                        </span>
-                    ))}
-                </div>
-                <input
-                    type="text"
-                    value={inputText}
-                    onChange={handleInputChange}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    onKeyDown={(e) => {
-                        if (e.key == "ArrowLeft" || e.key == "ArrowRight" || e.key == "ArrowUp" || e.key == "ArrowDown" || e.key === 0 || e.ctrlKey || e.metaKey) {
-                            e.preventDefault();
-                        }
-                    }}
-                    style={{ opacity: 0 }}
-                    autoFocus={false}
-                />
-                {!isFocused && <div className={styles.unactive}>
-                    <TextField
-                        label="Username"
-                        variant="filled"
-                        value={username}
-                        focused
-                        onChange={(e) => setUsername(e.target.value)}
-                        sx={{ input: { color: 'white' } }}
-                        style={{ margin: '10px' }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment sx={{color: 'white'}} position="start">
-                                    <AccountCircle/>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <p onClick={() => document.querySelector('input').focus()}>Press Enter or Click this text to start typing...</p>
-                    <br />
-                    <ButtonGroup variant='contained' aria-label="Basic button group">
-                        <Button onClick={() => restartGame()} color='warning' startIcon={<RestartAltIcon />}>Restart</Button>
-                        <Button onClick={() => newGame()} color='error' endIcon={<PlayArrowIcon />}>New Game</Button>
-                    </ButtonGroup>
-                </div>}
-                {isFinished &&
-                    <div className={styles.finished}>
-                        <p>Game Over!</p>
-                        <div className={styles.statTable}>
-                            <div>
-                                <p>Your score:</p>
-                                <p>{score}</p>
-                            </div>
-                            <div>
-                                <p>Your accuracy:</p>
-                                <p>{Math.floor((inputText.length / text.length) * 100)}%</p>
-                            </div>
-                            <div>
-                                <p>Your speed:</p>
-                                <p>{inputText.length == 0 ? 0 : Math.floor((inputText.split(" ").length / prevCountdown) * 60)} WPM</p>
-                            </div>
+            <div className={styles.background}>
+                <Header />
+                <div className={styles.typeField}>
+                    <div
+                        className={`${!isFocused ? styles.blur : ''} ${styles.typeBox}`}
+                        style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                        onClick={() => document.querySelector('input').focus()}
+                        onDragStart={(e) => e.preventDefault()}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onMouseUp={(e) => e.preventDefault()}
+                        onMouseMove={(e) => e.preventDefault()}
+                        onMouseEnter={(e) => e.preventDefault()}
+                        onMouseLeave={(e) => e.preventDefault()}
+                        onMouseOver={(e) => e.preventDefault()}
+                        onMouseOut={(e) => e.preventDefault()}
+                        onTouchStart={(e) => e.preventDefault()}
+                        onTouchMove={(e) => e.preventDefault()}
+                        onTouchEnd={(e) => e.preventDefault()}
+                        onTouchCancel={(e) => e.preventDefault()}
+                    >
+                        <div className={styles.timer}>
+                            <h2>{countdown}</h2>
                         </div>
-                        <br />
-                        <Button onClick={() => restartGame()} color='warning' variant='contained' startIcon={<RestartAltIcon />}>Restart</Button>
-                        <Button onClick={() => newGame()} variant='contained' color='success' endIcon={<PlayArrowIcon />} style={{ margin: '10px' }}>Next</Button>
+                        {text.split("").map((letter, index) => (
+                            <span
+                                key={index}
+                                className={inputText[index] ? letter === inputText[index] ? styles.typed : styles.wrong : styles.template }
+                            >
+                                {isFocused && index === inputText.length && <span className={styles.cursor}>.</span>}
+                                <span style={{ position: 'relative' }}>
+                                    {index < inputText.length && inputText[index] != letter && letter == ' ' ? '_' : letter}
+                                </span>
+                            </span>
+                        ))}
                     </div>
-                }
+                    <input
+                        type="text"
+                        value={inputText}
+                        onChange={handleInputChange}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
+                        onKeyDown={(e) => {
+                            if (e.key == "ArrowLeft" || e.key == "ArrowRight" || e.key == "ArrowUp" || e.key == "ArrowDown" || e.key === 0 || e.ctrlKey || e.metaKey) {
+                                e.preventDefault();
+                            }
+                        }}
+                        style={{ opacity: 0 }}
+                        autoFocus={false}
+                    />
+                    {!isFocused && <div className={styles.unactive}>
+                        <div className={styles.unactiveContent}>
+                        <TextField
+                            label="Username"
+                            variant="filled"
+                            value={username}
+                            focused
+                            onChange={(e) => setUsername(e.target.value)}
+                            sx={{ input: { color: 'white' } }}
+                            style={{ margin: '10px' }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment sx={{ color: 'white' }} position="start">
+                                        <AccountCircle />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <p onClick={() => document.querySelector('input').focus()}>Press Enter or Click this text to start typing...</p>
+                        <br />
+                        <ButtonGroup variant='contained' aria-label="Basic button group">
+                            <Button onClick={() => restartGame()} color='warning' startIcon={<RestartAltIcon />}>Restart</Button>
+                            <Button onClick={() => newGame()} color='error' endIcon={<PlayArrowIcon />}>New Game</Button>
+                        </ButtonGroup>
+                        </div>
+                    </div>}
+                    {isFinished &&
+                        <div className={styles.finished}>
+                            <p>Game Over!</p>
+                            <div className={styles.statTable}>
+                                <div>
+                                    <p>Your score:</p>
+                                    <p>{score}</p>
+                                </div>
+                                <div>
+                                    <p>Your accuracy:</p>
+                                    <p>{Math.floor((inputText.length / text.length) * 100)}%</p>
+                                </div>
+                                <div>
+                                    <p>Your speed:</p>
+                                    <p>{inputText.length == 0 ? 0 : Math.floor((correctWords / prevCountdown) * 60)} WPM</p>
+                                </div>
+                                <div>
+                                    <p>Your raw speed:</p>
+                                    <p>{inputText.length == 0 ? 0 : Math.floor((inputText.split(" ").length / prevCountdown) * 60)} WPM</p>
+                                </div>
+                            </div>
+                            <br />
+                            <Button onClick={() => restartGame()} color='warning' variant='contained' startIcon={<RestartAltIcon />}>Restart</Button>
+                            <Button onClick={() => newGame()} variant='contained' color='success' endIcon={<PlayArrowIcon />} style={{ margin: '10px' }}>Next</Button>
+                        </div>
+                    }
+                </div>
             </div>
-
         </div>
     );
 }
