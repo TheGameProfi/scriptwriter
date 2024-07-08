@@ -1,24 +1,2 @@
 [
-  {
-    "username": "Guest",
-    "score": 7.82
-  },
-  {
-    "username": "Guest",
-    "score": 9.18,
-    "accuracy": 12,
-    "speed": 60
-  },
-  {
-    "username": "pro",
-    "score": "6.46",
-    "accuracy": 12,
-    "speed": 60
-  },
-  {
-    "username": "Guest",
-    "score": "0.00",
-    "accuracy": 0,
-    "speed": 12
-  }
 ]
