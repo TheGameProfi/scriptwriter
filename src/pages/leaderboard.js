@@ -1,11 +1,10 @@
 import React from "react";
-import Data from '@/data/scores.json';
 import styles from '@/styles/Leaderboard.module.css';
 import Header from "@/components/Header";
 
-export default function Leaderboard() {
+export default function Leaderboard({ scores }) {
     // Sort the scores array in descending order based on the score property
-    const sortedData = Data.sort((a, b) => b.score - a.score);
+    const sortedData = scores.sort((a, b) => b.score - a.score);
 
     return (
         <div>
@@ -37,4 +36,28 @@ export default function Leaderboard() {
             </div>
         </div>
     );
+}
+
+export async function getServerSideProps() {
+    // Fetch data from API
+    const res = await fetch('http://localhost:3000/api/score', {
+        method: 'GET'
+    }) // Replace with your API endpoint
+
+    if (!res.ok) {
+        console.error('Failed to fetch scores');
+        return {
+            props: {
+                scores: [],
+            },
+        };
+    }
+
+    const scores = await res.json();
+
+    return {
+        props: {
+            scores,
+        },
+    };
 }
