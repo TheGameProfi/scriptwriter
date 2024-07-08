@@ -1,5 +1,5 @@
 # STATUS
-[![Project Status: W.I.P – The project is not yet stable, and is currently in a semi-active development.](https://www.repostatus.org/badges/latest/active.svg)]() </br>
+[![Project Status: W.I.P – The project is not yet stable, and is currently in a semi-active development.](https://www.repostatus.org/badges/latest/wip.svg)]() </br>
 W.I.P – The project is not yet stable, and is currently in a semi-active development.
 
 ---
