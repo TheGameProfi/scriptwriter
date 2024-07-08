@@ -3,7 +3,7 @@
     justify-content: space-between; /* Ensure items are spread across the header */
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.85);
     color: white;
     min-width: 600px;
 }
@@ -22,6 +22,11 @@
     margin-left: 10px;
 }
 
+.endofhead{
+    display: flex;
+    align-items: center;
+}
+
 .nav a {
     margin-left: 15px;
     color: white;
@@ -30,4 +35,12 @@
 
 .nav a:hover {
     text-decoration: underline;
+}
+
+.white .head{
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #333333;
+}
+.white .nav a{
+    color: #333333;
 }

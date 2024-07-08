@@ -6,6 +6,8 @@ import { Button, ButtonGroup, TextField, InputAdornment } from "@mui/material";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { AccountCircle } from "@mui/icons-material";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 export default function Game() {
@@ -15,6 +17,19 @@ export default function Game() {
     useEffect(() => {
         setText(getText());
     }, []);
+
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const [mode, setMode] = useState([prefersDarkMode ? true : false])
+
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode: mode ? 'dark' : 'light',
+          },
+        }),
+      [mode],
+    );
 
     const [inputText, setInputText] = useState("");
     const [isFinished, setIsFinished] = useState(false);
@@ -152,11 +167,16 @@ export default function Game() {
         return tmpLetters;
     }
 
+    function changeMode() {
+        setMode(mode ? false : true);
+    }
+
     return (
         <div>
+            <ThemeProvider theme={theme}>
             <div className={styles.background}>
-                <Header />
-                <div className={styles.typeField}>
+                <Header toggleFunc={() => changeMode()} darkMode={prefersDarkMode}/>
+                <div className={`${mode ? styles.dark : styles.white} ${styles.typeField}`}>
                     <div
                         className={`${!isFocused ? styles.blur : ''} ${styles.typeBox}`}
                         style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
@@ -212,11 +232,11 @@ export default function Game() {
                             value={username}
                             focused
                             onChange={(e) => setUsername(e.target.value)}
-                            sx={{ input: { color: 'white' } }}
+                            //sx={{ input: { color: 'white' } }}
                             style={{ margin: '10px' }}
                             InputProps={{
                                 startAdornment: (
-                                    <InputAdornment sx={{ color: 'white' }} position="start">
+                                    <InputAdornment position="start">
                                         <AccountCircle />
                                     </InputAdornment>
                                 ),
@@ -258,6 +278,7 @@ export default function Game() {
                     }
                 </div>
             </div>
+            </ThemeProvider>
         </div>
     );
 }
