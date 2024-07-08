@@ -22,13 +22,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to start p
 
 ## About
 
-This Project is designed to advance my knowlage of next.js projects. </br>
-Since I am a fan of monkeytyper and I am missing somethings in the orginal one, I tried to recreate the Game into my own Design and my with own Functions. </br>
-Currently this project is still **W.I.P** and is only a side Project.
+This project is designed to advance my knowledge of Next.js projects. </br>
+As a fan of monkeytyper, I missed some features in the original version, so I tried to recreate the game with my own design and functions. </br>
+Currently, this project is still a **W.I.P** and is only a side project.
 
 ---
 
-```
+```text
 ___________.__             ________                     __________                _____.__ 
 \__    ___/|  |__   ____  /  _____/_____    _____   ____\______   \_______  _____/ ____\__|
   |    |   |  |  \_/ __ \/   \  ___\__  \  /     \_/ __ \|     ___/\_  __ \/  _ \   __\|  |
