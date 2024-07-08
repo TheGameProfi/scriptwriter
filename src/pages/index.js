@@ -20,7 +20,7 @@ export default function Game() {
     const [isFinished, setIsFinished] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const myInterval = useRef();
-    const [countdown, setCountdown] = useState(5);
+    const [countdown, setCountdown] = useState(30);
     const [prevCountdown, setPrevCountdown] = useState(countdown);
     const [correctLetters, setCorrectLetters] = useState(0);
     const [correctWords, setCorrectWords] = useState(0);
