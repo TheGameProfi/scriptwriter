@@ -1,5 +1,10 @@
 services:
-  web:
+  scriptwriter:
+    container_name: scriptwriter
     build: .
-    ports:
-      - 6000:3000
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    external: true
