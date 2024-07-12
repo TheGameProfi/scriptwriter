@@ -54,7 +54,7 @@ export default function Leaderboard({ darkMode }) {
                     {
                         error && errorCount >= 5 && <Alert severity="error" action={<Button color="inherit" size="small" onClick={() => window.location.reload()}>Reload Page</Button>}> <AlertTitle>Error</AlertTitle> Failed to fetch Scores after 5 tries. <br /> Reload or try again later! </Alert> ||
                         error && <Alert severity="error" action={<Button color="inherit" size="small" onClick={() => setErrorCount(errorCount + 1) && fetchScores()}>Retry</Button>}> <AlertTitle>Error</AlertTitle> Failed to fetch the Scores </Alert> ||
-                        scores.length === 0 && <Skeleton variant="rectangular" width={"100%"} height={200} /> ||
+                        scores.length === 0 && <Skeleton variant="rectangular" animation="wave" width={"100%"} height={200} /> ||
                         scores.length > 0 && <DataGrid
                             rows={scores}
                             columns={columns}
