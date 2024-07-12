@@ -20,6 +20,9 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to start playing the Game.
 
+**Docker Compose**
+When using Docker Compose, don't forget to modify the compose file, since mine has an reverseProxy and no open Ports
+
 ## About
 
 This project is designed to advance my knowledge of Next.js projects. </br>
