@@ -39,10 +39,10 @@ export default function Leaderboard({ darkMode }) {
 
     // Sort the scores array in descending order based on the score property
     const columns = [
-        { field: 'username', headerName: 'Username', width: 200, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
-        { field: 'score', headerName: 'Score', width: 150, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
-        { field: 'accuracy', headerName: 'Accuracy', width: 150, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
-        { field: 'speed', headerName: 'Speed', width: 150, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
+        { field: 'username', headerName: 'Username', flex: 1.5, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
+        { field: 'score', headerName: 'Score', flex: 1, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
+        { field: 'accuracy', headerName: 'Accuracy', flex: 1, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
+        { field: 'speed', headerName: 'Speed', flex: 1, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center' },
     ];
 
     return (
