@@ -5,33 +5,23 @@ import { Button, IconButton } from "@mui/material";
 import { Home, Leaderboard, LightMode, DarkMode } from "@mui/icons-material";
 import Link from 'next/link';
 
-const Header = ({ toggleFunc, darkMode }) => {
-
-    const [mode, setMode] = React.useState(darkMode);
-
-    const handleToggle = () => {
-        if (toggleFunc) {
-            setMode(!mode);
-            toggleFunc();
-        }
-    }
+const Header = ({ toggle, darkMode, toggleDarkMode }) => {
 
     return (
-        //<header className={`${mode ? styles.dark : styles.white} ${styles.head}`}>
-        <header className={mode ? styles.white : styles.dark}>
+        <header className={darkMode ? styles.dark : styles.white}>
             <div className={styles.head}>
                 <div className={styles.branding}>
                     <Image
-                        src="/tmp-logo.svg"
+                        src={`/thecfu-logo-${darkMode ? 'dark' : 'light'}.svg`}
                         alt="Logo"
-                        width={30}
-                        height={30}
+                        width={40}
+                        height={40}
                         className={styles.logo}
                     />
-                    <h1>VirtualMinds</h1>
+                    <h1>The CfU</h1>
                 </div>
                 <div className={styles.title}>
-                    <h1>MonkeyScript</h1>
+                    <h1>ScriptWriter</h1>
                 </div>
                 <div className={styles.endofhead}>
                 <div className={styles.nav}>
@@ -42,9 +32,9 @@ const Header = ({ toggleFunc, darkMode }) => {
                         <Button variant="text" color="primary" startIcon={<Leaderboard />}>Leaderboard</Button>
                     </Link>
                 </div>
-                {toggleFunc && <div className={styles.toggle}>
-                    <IconButton onClick={handleToggle}>
-                        {mode ? <LightMode /> : <DarkMode />}
+                {toggle && <div className={styles.toggle}>
+                    <IconButton onClick={toggleDarkMode}>
+                        {darkMode ? <DarkMode /> : <LightMode />}
                     </IconButton>
                 </div>}
                 </div>
