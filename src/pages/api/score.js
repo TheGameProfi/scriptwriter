@@ -15,7 +15,11 @@ export default function handler(req, res) {
             
             const fileData = fs.readFileSync(filePath, 'utf8');
             const data = JSON.parse(fileData);
-            data.push({ username, score, accuracy, speed });
+            
+            // Generate a unique id for the new entry
+            const id = data.length > 0 ? data.length + 1 : 1;
+            
+            data.push({ id, username, score, accuracy, speed });
             fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
             res.status(201).json({ message: 'Score added' });
         } catch (error) {

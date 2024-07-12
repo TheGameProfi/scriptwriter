@@ -1,37 +1,33 @@
 import React from "react";
 import styles from '@/styles/Leaderboard.module.css';
 import Header from "@/components/Header";
+import { DataGrid } from '@mui/x-data-grid';
 
-export default function Leaderboard({ scores }) {
+export default function Leaderboard({ scores, darkMode }) {
     // Sort the scores array in descending order based on the score property
-    const sortedData = scores.sort((a, b) => b.score - a.score);
+    const columns = [
+        { field: 'username', headerName: 'Username', width: 200, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center'},
+        { field: 'score', headerName: 'Score', width: 150, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center'},
+        { field: 'accuracy', headerName: 'Accuracy', width: 150, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center'},
+        { field: 'speed', headerName: 'Speed', width: 150, headerClassName: styles.centeredHeader, cellClassName: styles.centeredCell, headerAlign: 'center'},
+    ];
 
     return (
         <div>
-            <Header />
-            <div className={styles.leaderboard}>
-                <div className={styles.container}>
+            <div className={styles.bg}>
+                <Header toggle={false} darkMode={darkMode} />
+                <div className={styles.leaderboard}>
                     <h1>Leaderboard</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Score</th>
-                                <th>Accuracy</th>
-                                <th>Speed</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sortedData.map((score, index) => (
-                                <tr key={index}>
-                                    <td>{score.username}</td>
-                                    <td>{score.score}</td>
-                                    <td>{score.accuracy}</td>
-                                    <td>{score.speed}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <DataGrid
+                        rows={scores}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 10 },
+                            },
+                        }}
+                        pageSizeOptions={[5, 10, 20, 30]}
+                    />
                 </div>
             </div>
         </div>
