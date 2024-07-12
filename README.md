@@ -6,21 +6,30 @@ W.I.P – The project is not yet stable, and is currently in a semi-active devel
 
 ## Getting Started
 
-First, run the development server:
+### Developement Instance
 
+You can start your own Developement instance by using, one of the following commands that applies for your case:
 ```bash
+# npm
 npm run dev
-# or
+# or yarn
 yarn dev
-# or
+# or pnpm
 pnpm dev
-# or
+# or bun
 bun dev
 ```
+Then you can open https://localhost:3000 or the printed port in the Console.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to start playing the Game.
+### Docker
 
-**Docker Compose**
+The Repo includes an `dockerfile` you can create your own Image and run it like this:
+```bash
+docker build -t scriptwriter
+docker start -it scriptwriter -d
+```
+
+### Docker Compose
 When using Docker Compose, don't forget to modify the compose file, since mine has an reverseProxy and no open Ports
 
 ## About
