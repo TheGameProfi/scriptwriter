@@ -4,6 +4,7 @@ services:
     build: .
     networks:
       - proxynet
+    restart: unless-stopped
 
 networks:
   proxynet:
